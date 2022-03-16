@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Dashboard\Permission;
 
 use App\Http\Controllers\Controller;
-use App\Models\Permission;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -34,59 +33,35 @@ class PermissionController extends Controller
         return  view('dashboard.permission.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     * @return Response
-     */
+
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param Permission $permission
-     * @return Response
-     */
-    public function show(Permission $permission)
+
+    public function show(Permissions $permission)
+    {
+        return  view('dashboard.permission.show');
+    }
+
+
+    public function edit(Permissions $permission)
+    {
+        return  view('dashboard.permission.edit');
+    }
+
+
+    public function update(Request $request, Permissions $permission)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Permission $permission
-     * @return Response
-     */
-    public function edit(Permission $permission)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param Permission $permission
-     * @return Response
-     */
-    public function update(Request $request, Permission $permission)
+    public function destroy(Permissions $permission)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param Permission $permission
-     * @return Response
-     */
-    public function destroy(Permission $permission)
-    {
-        //
+        $permission->deleteOrFail();
+        $permission->syncPermissions();
+        return  redirect()->back();
     }
 }

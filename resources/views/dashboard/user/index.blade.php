@@ -48,10 +48,7 @@
                             @foreach($users as $user)
                             <tr>
                                 <td>
-                                    <div class="form-check font-size-16">
-                                        <input class="form-check-input" type="checkbox" id="customerlistcheck01">
-                                        <label class="form-check-label" for="customerlistcheck01"></label>
-                                    </div>
+                                   {{$user->id}}
                                 </td>
                                 <td>{{$user->name}}</td>
                                 <td>
@@ -71,17 +68,26 @@
                                 <td>{{  date('j-F, Y ', strtotime($user->created_at))}}</td>
                                 <td>
                                     <div class="dropdown">
-                                        <a href="#" class="dropdown-toggle card-drop" data-bs-toggle="dropdown"
-                                           aria-expanded="false">
-                                            <i class="mdi mdi-dots-horizontal font-size-18"></i>
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu-end">
-                                            <li><a href="#" class="dropdown-item"><i
-                                                        class="mdi mdi-pencil font-size-16 text-success me-1"></i>
-                                                    Edit</a></li>
-                                            <li><a href="#" class="dropdown-item"><i
-                                                        class="mdi mdi-trash-can font-size-16 text-danger me-1"></i>
-                                                    Delete</a></li>
+                                        <ul class="list-inline font-size-20 contact-links mb-0">
+                                            <li class="list-inline-item px-2">
+                                                <a href="{{route('users.show', $user)}}" title="View"><i
+                                                        class="bx bx bx-show-alt"></i></a>
+                                            </li>
+                                            <li class="list-inline-item px-2">
+                                                <a href="{{route('users.edit', $user)}}" title="Edit"><i
+                                                        class="bx bx-pencil"></i></a>
+                                            </li>
+                                            <li class="list-inline-item px-2">
+                                                <a class="link-dark d-inline-block" href="#"
+                                                   onclick="if(confirm('Delete this record?')){document.getElementById('delete-entity-{{ $user->id }}').submit();return false;}"><i
+                                                        class="bx bx-trash"></i>
+                                                </a>
+                                            </li>
+                                            <form id="delete-entity-{{ $user->id }}"
+                                                  action="{{ route('users.destroy', $user) }}" method="POST">
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                @csrf
+                                            </form>
                                         </ul>
                                     </div>
                                 </td>

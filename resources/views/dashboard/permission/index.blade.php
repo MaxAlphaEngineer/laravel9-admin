@@ -46,10 +46,7 @@
                             @foreach($permissions as $permission)
                                 <tr>
                                     <td>
-                                        <div class="form-check font-size-16">
-                                            <input class="form-check-input" type="checkbox" id="customerlistcheck01">
-                                            <label class="form-check-label" for="customerlistcheck01"></label>
-                                        </div>
+                                        {{$permission->id}}
                                     </td>
                                     <td>{{$permission->name}}</td>
                                     <td>
@@ -63,14 +60,24 @@
                                     <td>
                                         <ul class="list-inline font-size-20 contact-links mb-0">
                                             <li class="list-inline-item px-2">
-                                                <a href="" title="Message"><i class="bx bx bx-show-alt"></i></a>
+                                                <a href="{{route('permissions.show', $permission)}}" title="View"><i
+                                                        class="bx bx bx-show-alt"></i></a>
                                             </li>
                                             <li class="list-inline-item px-2">
-                                                <a href="" title="Profile"><i class="bx bx-pencil"></i></a>
+                                                <a href="{{route('permissions.edit', $permission)}}" title="Edit"><i
+                                                        class="bx bx-pencil"></i></a>
                                             </li>
                                             <li class="list-inline-item px-2">
-                                                <a href="" title="Profile"><i class="bx bx-trash"></i></a>
+                                                <a class="link-dark d-inline-block" href="#"
+                                                   onclick="if(confirm('Delete this record?')){document.getElementById('delete-entity-{{ $permission->id }}').submit();return false;}"><i
+                                                        class="bx bx-trash"></i>
+                                                </a>
                                             </li>
+                                            <form id="delete-entity-{{ $permission->id }}"
+                                                  action="{{ route('permissions.destroy', $permission) }}" method="POST">
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                @csrf
+                                            </form>
                                         </ul>
                                     </td>
                                 </tr>
